@@ -7,24 +7,52 @@
     <style>
         .slider {
             width: 100%;
-            height: 200px;
-            border: 1px solid black;
+            overflow: hidden;
+            position: relative;
         }
-        #slider-inner {
-            width: 100px;
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .slide {
+            flex: 0 0 100%;
+            max-width: 100%;
+            overflow: hidden; 
+        }
+        .slide img {
+            width: 100%;
             height: 100px;
-            background: lightblue;
+            object-fit: cover;
+        }
+        .controls {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .control {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: gray;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .control.active {
+            background-color: black;
         }
     </style>
 </head>
 <body>
     <section class="slider">
         <div id="slider-inner">
-        <img src="img1.jpg">
-        <div class="content">
-            <h2>Slide 1 Title</h2>
-            <p>Slide 1 description...</p> 
-          </div>
+        <!-- <img src="" alt="">
+        <img src="" alt="">
+        <img src="" alt="">
+        <img src="" alt="">
+        <img src="" alt="">
+        <img src="" alt=""> -->
         </div>
     </section>
     <script src="index.js"></script>
