@@ -24,3 +24,8 @@ const anim = setInterval(
 setTimeout(() => {
     clearInterval(anim)
 }, 6_000)
+
+window.onload = function(){
+    const image = document.querySelector('#img')
+    const img_arr=[""]
+}
