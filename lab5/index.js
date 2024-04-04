@@ -38,11 +38,16 @@ const sum = async (...args) => {
         //         throw new Error("Argument" + num + "nie jest liczbą całkowitą.")
         //     }
         // }
-        const results = await Promise.all(args.map(num => asyncAdd(0, num))); //100ms
+        let asyncOperationsCount = args.length; 
+        const results = await Promise.all(args.map(num => {
+            return asyncAdd(0, num)
+                .finally(() => asyncOperationsCount--); 
+        }));
         
-        // Sumujemy wyniki zwrócone przez asyncAdd
+        console.log("Liczba operacji asynchronicznych:", asyncOperationsCount);
+
         const sum = results.reduce((acc, val) => acc + val, 0);
-        return sum
+        return sum;
     }
     catch (error) {
         console.error(error.message);
