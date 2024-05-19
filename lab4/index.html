@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <button class="btnAdd">Add</button>
+    <div class="container"></div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <input type="text" id="noteTitle" placeholder="Enter title...">
+            <textarea id="noteContent" placeholder="Enter content..."></textarea>
+            <input type="color" id="noteColor" value="#ffffff"> <!-- Pole wyboru koloru -->
+            <button id="modalAdd" class="btnAdd">Add</button>
+            <button id="modalSave" class="btnAdd">Save</button>
+        </div>
+    </div>
+    <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="viewClose">&times;</span>
+            <h2 id="viewTitle"></h2>
+            <div id="viewContentContainer">
+                <p id="viewContent"></p>
+            </div>
+            <div class="buttons">
+                <button id="modalEdit" class="btnAdd">Edit</button>
+                <button id="modalDelete" class="btnDelete">Delete</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
