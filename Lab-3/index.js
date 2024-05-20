@@ -1,37 +1,59 @@
-// const clap = document.querySelector('#s1')
-// const kick = document.querySelector('#s2')
-// const hihat = document.querySelector('#s3')
-// const boom = document.querySelector('#s4')
-// const ride = document.querySelector('#s5')
-// const snare = document.querySelector('#s6')
-// const tink = document.querySelector('#s7')
-// const tom = document.querySelector('#s8')
-// const openhat = document.querySelector('#s9')
+let isRecording = [false, false, false, false];
+let startTime = [0, 0, 0, 0];
+let recordedSounds = [[], [], [], []];
 
-const date = Date.now
-let data = []
+const sounds = {};
 
-const sounds = {
-    'a': document.querySelector('#s1'),
-    's': document.querySelector('#s2'),
-    'd': document.querySelector('#s3'),
-    'f': document.querySelector('#s4'),
-    'g': document.querySelector('#s5'),
-    'h': document.querySelector('#s6'),
-    'j': document.querySelector('#s7'),
-    'k': document.querySelector('#s8'),
-    'l': document.querySelector('#s9'),
+document.querySelectorAll('audio').forEach(audio => {
+    const key = audio.getAttribute('data-key');
+    sounds[key] = audio;
+});
+
+document.addEventListener('keypress', (ev) => {
+    const key = ev.key;
+    const sound = sounds[key];
+    if (sound) {
+        sound.currentTime = 0;
+        sound.play();
+        for (let i = 0; i < 4; i++) {
+            if (isRecording[i]) {
+                const time = Date.now() - startTime[i];
+                recordedSounds[i].push({ key, time });
+            }
+        }
+    }
+});
+
+function startRecording(channel) {
+    isRecording[channel] = true;
+    startTime[channel] = Date.now();
+    recordedSounds[channel] = [];
+    console.log(`Recording started on channel ${channel + 1}`);
 }
-addEventListener('keypress', (ev)=>
-{
-    const key = ev.key
-    const time = Date.now - date
-    const sound = sounds[key]
-    sound.currentTime = 0
-    sound.play()
-    data.push(key,time)
-    console.log(data.length)
-})
 
-function StartRecord(){
+function stopRecording(channel) {
+    isRecording[channel] = false;
+    console.log(`Recording stopped on channel ${channel + 1}`);
+    console.log(recordedSounds[channel]);
+}
+
+function playRecording(channel) {
+    if (recordedSounds[channel].length === 0) {
+        console.log(`No sounds recorded on channel ${channel + 1}`);
+        return;
+    }
+    console.log(`Playing recording on channel ${channel + 1}`);
+    recordedSounds[channel].forEach(sound => {
+        setTimeout(() => {
+            sounds[sound.key].currentTime = 0;
+            sounds[sound.key].play();
+        }, sound.time);
+    });
+}
+
+function playAllRecordings() {
+    console.log('Playing all recordings');
+    for (let i = 0; i < 4; i++) {
+        playRecording(i);
+    }
 }

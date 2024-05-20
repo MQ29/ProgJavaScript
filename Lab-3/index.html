@@ -3,20 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Drumkit</title>
 </head>
 <body>
-    <audio src="./sounds/boom.wav" controls id = "s1"></audio>
-    <audio src="./sounds/hihat.wav" controls id = "s2"></audio>
-    <audio src="./sounds/ride.wav" controls id = "s3"></audio>
-    <audio src="./sounds/snare.wav" controls id = "s4"></audio>
-    <audio src="./sounds/clap.wav" controls id = "s5"></audio>
-    <audio src="./sounds/kick.wav" controls id = "s6"></audio>
-    <audio src="./sounds/openhat.wav" controls id = "s7"></audio>
-    <audio src="./sounds/tom.wav" controls id = "s8"></audio>
-    <audio src="./sounds/tink.wav" controls id = "s9"></audio>
-    <button onclick="StartRecord()">Start</button>
-    <button onclick="StopRecord()">Stop</button>
+    <audio src="./sounds/boom.wav" data-key="a" id="s1"></audio>
+    <audio src="./sounds/hihat.wav" data-key="s" id="s2"></audio>
+    <audio src="./sounds/ride.wav" data-key="d" id="s3"></audio>
+    <audio src="./sounds/snare.wav" data-key="f" id="s4"></audio>
+    <audio src="./sounds/clap.wav" data-key="g" id="s5"></audio>
+    <audio src="./sounds/kick.wav" data-key="h" id="s6"></audio>
+    <audio src="./sounds/openhat.wav" data-key="j" id="s7"></audio>
+    <audio src="./sounds/tom.wav" data-key="k" id="s8"></audio>
+    <audio src="./sounds/tink.wav" data-key="l" id="s9"></audio>
+    
+    <div>
+        <button onclick="startRecording(0)">Start Channel 1</button>
+        <button onclick="stopRecording(0)">Stop Channel 1</button>
+        <button onclick="playRecording(0)">Play Channel 1</button>
+    </div>
+    <div>
+        <button onclick="startRecording(1)">Start Channel 2</button>
+        <button onclick="stopRecording(1)">Stop Channel 2</button>
+        <button onclick="playRecording(1)">Play Channel 2</button>
+    </div>
+    <div>
+        <button onclick="startRecording(2)">Start Channel 3</button>
+        <button onclick="stopRecording(2)">Stop Channel 3</button>
+        <button onclick="playRecording(2)">Play Channel 3</button>
+    </div>
+    <div>
+        <button onclick="startRecording(3)">Start Channel 4</button>
+        <button onclick="stopRecording(3)">Stop Channel 4</button>
+        <button onclick="playRecording(3)">Play Channel 4</button>
+    </div>
+    <div>
+        <button onclick="playAllRecordings()">Play All Channels</button>
+    </div>
+
     <script src="index.js"></script>
 </body>
 </html>
