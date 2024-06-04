@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider Poziomy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="slider-container">
+        <div class="slider" id="slider">
+            <img src="../img/1.jpg" alt="Slide 1">
+            <img src="../img/2.jpg" alt="Slide 2">
+            <img src="../img/3.jpg" alt="Slide 3">
+            <img src="../img/4.jpg" alt="Slide 4">
+        </div>
+        <div class="controls">
+            <button id="prev"><i class="fas fa-chevron-left"></i></button>
+            <button id="next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="indicators">
+            <span class="indicator" data-slide="0"></span>
+            <span class="indicator" data-slide="1"></span>
+            <span class="indicator" data-slide="2"></span>
+            <span class="indicator" data-slide="3"></span>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
