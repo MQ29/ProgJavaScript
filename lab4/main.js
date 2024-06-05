@@ -1,27 +1,28 @@
 const btnAdd = document.querySelector(".btnAdd");
 const container = document.querySelector(".container");
-const modal = document.getElementById("myModal");
-const btnModalAdd = document.getElementById("modalAdd");
-const btnModalSave = document.getElementById("modalSave");
+const modal = document.querySelector("#myModal");
+const btnModalAdd = document.querySelector("#modalAdd");
+const btnModalSave = document.querySelector("#modalSave");
 const btnModalClose = document.querySelector(".close");
-const noteTitleInput = document.getElementById("noteTitle");
-const noteContentInput = document.getElementById("noteContent");
-const noteColorInput = document.getElementById("noteColor"); // Dodane pole wyboru koloru
-const viewModal = document.getElementById("viewModal");
-const viewTitle = document.getElementById("viewTitle");
-const viewContent = document.getElementById("viewContent");
-const viewClose = document.getElementById("viewClose");
-const btnEdit = document.getElementById("modalEdit");
-const btnDelete = document.getElementById("modalDelete");
+const noteTitleInput = document.querySelector("#noteTitle");
+const noteContentInput = document.querySelector("#noteContent");
+const noteColorInput = document.querySelector("#noteColor"); 
+const viewModal = document.querySelector("#viewModal");
+const viewTitle = document.querySelector("#viewTitle");
+const viewContent = document.querySelector("#viewContent");
+const viewClose = document.querySelector("#viewClose");
+const btnEdit = document.querySelector("#modalEdit");
+const btnDelete = document.querySelector("#modalDelete");
 
 let currentNoteId = null;
 
 class Note {
-    constructor(title, content, color, id) { 
+    constructor(title, content, color, id, pinned = false) { 
         this.title = title;
         this.content = content;
         this.color = color || "#ffffff"; 
         this.id = id || Date.now();
+        this.pinned = pinned; 
     }
 
     createNoteElement() {
@@ -29,6 +30,10 @@ class Note {
         noteDiv.classList.add('note');
         noteDiv.dataset.id = this.id;
         noteDiv.style.backgroundColor = this.color; 
+
+        if (this.pinned) {
+            noteDiv.classList.add('pinned');
+        }
 
         const titleDiv = document.createElement('div');
         titleDiv.classList.add('title');
@@ -135,6 +140,9 @@ function addNoteToContainer(note) {
     const btnPin = noteElement.querySelector('.btnPin');
     btnPin.addEventListener('click', (event) => {
         const isPinned = noteElement.classList.contains('pinned');
+        note.pinned = !isPinned;
+        updatePinStatusInLocalStorage(note.id, note.pinned);
+
         if (!isPinned) {
             noteElement.classList.add('pinned');
             container.insertBefore(noteElement, container.firstChild);
@@ -145,7 +153,22 @@ function addNoteToContainer(note) {
         event.stopPropagation();
     });
 
-    container.appendChild(noteElement);
+    if (note.pinned) {
+        container.insertBefore(noteElement, container.firstChild);
+    } else {
+        container.appendChild(noteElement);
+    }
+}
+
+function updatePinStatusInLocalStorage(id, pinned) {
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const updatedNotes = notes.map(note => {
+        if (note.id === id) {
+            return { ...note, pinned }; 
+        }
+        return note;
+    });
+    localStorage.setItem('notes', JSON.stringify(updatedNotes));
 }
 
 function openViewModal(id) {
@@ -172,15 +195,19 @@ function saveNoteToLocalStorage(note) {
 
 function loadNotesFromLocalStorage() {
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    notes.sort((a, b) => b.pinned - a.pinned || b.id - a.id); //porownywanie kolejnych par elementow 
+    /**
+     * compare fucntion, it goes to second cryteria if substraction equals 0 (obie przypieta lub zadne)
+     */
     notes.forEach(noteData => {
-        const note = new Note(noteData.title, noteData.content, noteData.color, noteData.id); 
+        const note = new Note(noteData.title, noteData.content, noteData.color, noteData.id, noteData.pinned); 
         addNoteToContainer(note);
     });
 }
 
 viewClose.addEventListener('click', closeViewModal);
 
-btnEdit.addEventListener('click',() => {
+btnEdit.addEventListener('click', () => {
     const title = viewTitle.textContent;
     const content = viewContent.textContent;
     noteTitleInput.value = title;

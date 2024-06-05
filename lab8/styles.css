@@ -13,6 +13,26 @@ body {
     border-radius: 5px;
 }
 
+#suggestions {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    position: absolute;
+    z-index: 10;
+}
+
+#suggestions div {
+    padding: 8px;
+    cursor: pointer;
+}
+
+#suggestions div:hover {
+    background-color: #e0e0e0;
+}
+
 #getWeather {
     padding: 8px 16px;
     background-color: #4CAF50;

@@ -19,7 +19,7 @@ function calculateResults()
     let min = Number(valueInputs[0].value)
     let max = Number(valueInputs[0].value)
 
-    valueInputs.forEach(input => {
+    valueInputs.forEach((input) => {
         const value = Number(input.value)
         sum += value
         min = Math.min(min, value)
@@ -38,7 +38,7 @@ function calculateResults()
 
 calculateBtn.addEventListener('click', calculateResults);
 
-inputContainer.addEventListener('input', calculateResults)
+inputContainer.addEventListener('input', calculateResults) //fires when value of any input is changed
 
 addInputBtn.addEventListener('click', () =>{
     const newInput = document.createElement('input')
@@ -48,13 +48,20 @@ addInputBtn.addEventListener('click', () =>{
     inputContainer.insertBefore(newInput, addInputBtn)
 })
 
-inputContainer.addEventListener('blur', (event) => {
+inputContainer.addEventListener('blur', (event) => { //blur event fires when focus is lost
     const target = event.target
     if(target.matches('.valueInput') && target.value === '')
     {
-        inputContainer.removeChild(target);
+        inputContainer.removeChild(target); 
     }
-}, true)
+}, true) /**  < -- Event listener zostanie uruchomiony podczas propagacji zdarzenia od górnego 
+elementu w drzewie DOM do elementu docelowego. Listener blur zostanie uruchomiony 
+na inputContainer w fazie przechwytywania, zanim zdarzenie dotrze do docelowego elementu. */
+
+
+
+
+
 
 // przeliczBtn.addEventListener('click',()=> {
 //     const input1 = document.querySelector('#val1').value

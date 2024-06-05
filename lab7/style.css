@@ -16,6 +16,18 @@ body {
     gap: 20px;
 }
 
+#gameContainer {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+#gameSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #board {
     position: relative;
     width: 300px;
@@ -69,7 +81,7 @@ body {
 }
 
 #results {
-    margin-top: 20px;
+    width: 200px;
 }
 
 #resultsTable {

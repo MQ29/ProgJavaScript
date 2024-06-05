@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.getElementById('animationCanvas');
+    const canvas = document.querySelector('#animationCanvas');
     const ctx = canvas.getContext('2d');
 
-    const numBallsInput = document.getElementById('numBalls');
-    const distanceInput = document.getElementById('distance');
-    const forceInput = document.getElementById('force');
-    const startButton = document.getElementById('startButton');
-    const resetButton = document.getElementById('resetButton');
+    const numBallsInput = document.querySelector('#numBalls');
+    const distanceInput = document.querySelector('#distance');
+    const forceInput = document.querySelector('#force');
+    const startButton = document.querySelector('#startButton');
+    const resetButton = document.querySelector('#resetButton');
 
     let balls = [];
     let animationId;
@@ -16,11 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     class Ball {
         constructor(x, y, dx, dy, radius) {
-            this.x = x;
-            this.y = y;
-            this.dx = dx;
+            this.x = x; //wspolrzedne polozenia
+            this.y = y; 
+            this.dx = dx;//predkosci
             this.dy = dy;
-            this.radius = radius;
+            this.radius = radius; //promyk
         }
 
         draw() {
@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         update() {
+            //odbijanie jesli dotarla do krawedzi
             if (this.x + this.dx > canvas.width - this.radius || this.x + this.dx < this.radius) {
                 this.dx = -this.dx;
             }
@@ -39,13 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.dy = -this.dy;
             }
 
-            const distanceToMouse = Math.hypot(this.x - mouseX, this.y - mouseY);
+            const distanceToMouse = Math.hypot(this.x - mouseX, this.y - mouseY); 
             const force = parseFloat(forceInput.value);
             if (distanceToMouse < parseInt(distanceInput.value)) {
-                const angle = Math.atan2(this.y - mouseY, this.x - mouseX);
-                const attractionForce = force / (distanceToMouse / 10);
-                this.dx += Math.cos(angle) * attractionForce;
-                this.dy += Math.sin(angle) * attractionForce;
+                const angle = Math.atan2(this.y - mouseY, this.x - mouseX); //kat w radianach miedzy pilka a kursorem
+                const attractionForce = force / (distanceToMouse / 10); //sila przyciagania/odpychania
+                this.dx += Math.cos(angle) * attractionForce; //cosinus kata i aktualizacja o sile (poziom)
+                this.dy += Math.sin(angle) * attractionForce; //sinus kata i aktualizacja o sile (pion)
             }
 
             this.x += this.dx;

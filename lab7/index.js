@@ -1,5 +1,7 @@
 let beta = 0;
 let gamma = 0;
+let ballX = 0;
+let ballY = 0;
 let holeIndex = 0;
 let holes = [];
 let startTime = Date.now();
@@ -38,8 +40,11 @@ function createHoles(numberOfHoles) {
 
 function positionBall() {
     const boardRect = document.querySelector('#board').getBoundingClientRect();
-    document.querySelector('#ball').style.left = `${boardRect.width / 2 - 10}px`;
-    document.querySelector('#ball').style.top = `${boardRect.height / 2 - 10}px`;
+    ballX = boardRect.width / 2 - 10;
+    ballY = boardRect.height / 2 - 10;
+    const ball = document.querySelector('#ball');
+    ball.style.left = `${ballX}px`;
+    ball.style.top = `${ballY}px`;
 }
 
 function positionHole(hole) {
@@ -60,15 +65,24 @@ function moveBall() {
     const boardRect = document.querySelector('#board').getBoundingClientRect();
     const maxAngle = 45;
     const radius = Math.min(boardRect.width, boardRect.height) / 2;
-    const x = Math.min(Math.max(0, (gamma / maxAngle) * radius + boardRect.width / 2), boardRect.width - ball.offsetWidth);
-    const y = Math.min(Math.max(0, (beta / maxAngle) * radius + boardRect.height / 2), boardRect.height - ball.offsetHeight);
-    ball.style.left = `${x}px`;
-    ball.style.top = `${y}px`;
+
+    // Zmniejszenie czułości
+    const sensitivity = 0.1;
+    const targetX = Math.min(Math.max(0, (gamma / maxAngle) * radius + boardRect.width / 2), boardRect.width - ball.offsetWidth);
+    const targetY = Math.min(Math.max(0, (beta / maxAngle) * radius + boardRect.height / 2), boardRect.height - ball.offsetHeight);
+
+    ballX += (targetX - ballX) * sensitivity;
+    ballY += (targetY - ballY) * sensitivity;
+
+    ball.style.left = `${ballX}px`;
+    ball.style.top = `${ballY}px`;
 }
 
 function checkCollision() {
     const ballRect = document.querySelector('#ball').getBoundingClientRect();
     const holeRect = holes[holeIndex].getBoundingClientRect();
+    //odleglosc euklidesowa
+    //obliczanie wspolrzednych srodka
     const distance = Math.sqrt(Math.pow((ballRect.x + ballRect.width / 2) - (holeRect.x + holeRect.width / 2), 2) + Math.pow((ballRect.y + ballRect.height / 2) - (holeRect.y + holeRect.height / 2), 2));
 
     if (distance < 15) {
